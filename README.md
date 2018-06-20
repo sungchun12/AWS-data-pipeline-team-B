@@ -1,4 +1,4 @@
-# Making Data Pipelines from Chaos to Plain Sense
+# Architecting Data Pipelines from Chaos to Plain Sense
 
 <img src="https://github.com/sungchun12/AWS-data-pipeline-team-B/blob/master/Team%20B%20Logo.jpeg" width="100" height="100">>>>>>>>>>>>>>>>>><img src="https://github.com/sungchun12/AWS-data-pipeline-team-B/blob/master/Team%20B%20Logo%20Part%202.jpeg" width="100" height="100">
 
