@@ -47,9 +47,11 @@ resource "aws_security_group" "ima-flexb-database" {
   vpc_id      = "${aws_vpc.ima-flexb-vpc.id}"
 
   ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "TCP"
+    from_port = 3306
+    to_port   = 3306
+    protocol  = "TCP"
+
+    # allow tcp access from analytics security group:
     security_groups = ["${aws_security_group.ima-flexb-analytics.id}"]
   }
 

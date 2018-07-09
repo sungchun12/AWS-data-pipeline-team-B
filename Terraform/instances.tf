@@ -50,9 +50,32 @@ resource "aws_instance" "database" {
   yum update -y
   yum install -y mysql55-server
   service mysqld start
-  /usr/bin/mysqladmin -u root password 'secret'
-  mysql -u root -psecret -e "create user 'root'@'%' identified by 'secret';" mysql
-  mysql -u root -psecret -e 'CREATE TABLE mytable (mycol varchar(255));' test
-  mysql -u root -psecret -e "INSERT INTO mytable (mycol) values ('linuxacademythebest') ;" test
 HEREDOC
 }
+
+# The comment lines below were previously in the set of SQL commands above. 
+# There is a problem with the syntax used to create the database and insert records.
+# Steps to get this to work (done as root user):
+
+
+# 1) Log into MySQL instance manually via SSH
+# 2) Stop the server: `service mysqld stop`
+# 3) Restart in safe mode: `sudo mysqld_safe --skip-grant-tables --skip-networking &`
+# 4) Reconnect: `mysql -u root`
+# 5) Clear existing privileges: `FLUSH PRIVILEGES;`
+# 6) Update root user's password (5.7.15 and older): 
+# `SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');`  
+# 7) Stop as in 2), then restart normally: `service mysql start`
+# 8) Start a MySQL session as root: `mysql -u root -p`
+# 9) Add the test database: `CREATE DATABASE test;`
+# 10) Add data as shown in the CREATE TABLE / INSERT steps below.
+# 11) Check in a browser at: 
+# <Public IP of front-end instance>/calldb.php to 
+# confirm data exists and there is connectivity between machines
+
+
+#/usr/bin/mysqladmin -u root -password 'secret'
+#mysql -u root -p secret -e "create user 'root'@'%' identified by 'secret';" mysql
+#mysql -u root -p secret -e 'CREATE TABLE mytable (mycol varchar(255));' test
+#mysql -u root -p secret -e "INSERT INTO mytable (mycol) values ('linuxacademythebest') ;" test
+

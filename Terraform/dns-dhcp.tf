@@ -16,14 +16,14 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
 }
 
 /* DNS PART ZONE AND RECORDS */
-resource "aws_route53_zone" "ima-flexb-main" {
+resource "aws_route53_zone" "main" {
   name    = "${var.DnsZoneName}"
   vpc_id  = "${aws_vpc.ima-flexb-vpc.id}"
   comment = "Managed by terraform"
 }
 
-resource "aws_route53_record" "ima-flexb-database" {
-  zone_id = "${aws_route53_zone.ima-flexb-main.zone_id}"
+resource "aws_route53_record" "database" {
+  zone_id = "${aws_route53_zone.main.zone_id}"
   name    = "mydatabase.${var.DnsZoneName}"
   type    = "A"
   ttl     = "300"
