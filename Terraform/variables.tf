@@ -9,6 +9,7 @@ variable "AmiLinux" {
     us-east-1    = "ami-b73b63a0"
     us-west-2    = "ami-5ec1673e"
     ca-central-1 = "ami-03e86a67"
+    
   }
 
   description = "maps basic AMI with Python / Java etc. installed by region"
@@ -57,4 +58,13 @@ variable "tags" {
     Email    = "matt.winkler@slalom.com"
     Location = "Chicago"
   }
+}
+
+# declare redshift variables:
+variable redshift_master_username {}
+
+variable redshift_master_password {}
+
+variable redshift_logs_prefix {
+  default = "log/"
 }

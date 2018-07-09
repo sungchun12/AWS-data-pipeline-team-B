@@ -31,6 +31,18 @@ resource "aws_subnet" "private-az1-sn" {
   availability_zone = "${data.aws_availability_zones.available.names[1]}"
 }
 
+resource "aws_redshift_subnet_group" "dw-sng" {
+  name       = "dw-sng"
+  subnet_ids = ["${aws_subnet.private-az1-sn.id}"]
+
+  tags {
+    Name     = "dw-sng"
+    Owner    = "${var.tags["Owner"]}"
+    Email    = "${var.tags["Email"]}"
+    Location = "${var.tags["Location"]}"
+  }
+}
+
 resource "aws_route_table_association" "private-az1" {
   subnet_id      = "${aws_subnet.private-az1-sn.id}"
   route_table_id = "${aws_route_table.ima-flexb-rt-pri.id}"

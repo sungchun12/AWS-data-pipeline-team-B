@@ -8,7 +8,7 @@ resource "aws_security_group" "ima-flexb-analytics" {
     Location = "${var.tags["Location"]}"
   }
 
-  description = "ONLY HTTP CONNECTION INBOUD"
+  description = "INBOUND Connection settings"
   vpc_id      = "${aws_vpc.ima-flexb-vpc.id}"
 
   ingress {
@@ -43,16 +43,23 @@ resource "aws_security_group" "ima-flexb-database" {
     Location = "${var.tags["Location"]}"
   }
 
-  description = "ONLY tcp CONNECTION INBOUND"
+  description = "Inbound Connection settings"
   vpc_id      = "${aws_vpc.ima-flexb-vpc.id}"
 
   ingress {
-    from_port = 3306
-    to_port   = 3306
+    from_port = 5439
+    to_port   = 5439
     protocol  = "TCP"
 
     # allow tcp access from analytics security group:
     security_groups = ["${aws_security_group.ima-flexb-analytics.id}"]
+  }
+
+  ingress {
+    from_port   = 5439
+    to_port     = 5439
+    protocol    = "TCP"
+    cidr_blocks = ["12.106.136.114/32"]
   }
 
   ingress {

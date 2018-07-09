@@ -14,9 +14,13 @@ resource "aws_instance" "analytics" {
   }
 
   # Runs shell script upon startup:
-  user_data = <<HEREDOC
+  /*user_data = <<HEREDOC
   #!/bin/bash
   yum update -y
+  sudo yum-config-manager --enable postgresql
+
+  
+  
   yum install -y httpd24 php56 php56-mysqlnd
   service httpd start
   chkconfig httpd on
@@ -28,9 +32,10 @@ resource "aws_instance" "analytics" {
   echo "\$conn->close(); " >> /var/www/html/calldb.php
   echo "?>" >> /var/www/html/calldb.php
 HEREDOC
+*/
 }
 
-resource "aws_instance" "database" {
+/*resource "aws_instance" "database" {
   ami                         = "${lookup(var.AmiLinux, var.region)}"
   instance_type               = "t2.micro"
   associate_public_ip_address = "false"
@@ -51,7 +56,8 @@ resource "aws_instance" "database" {
   yum install -y mysql55-server
   service mysqld start
 HEREDOC
-}
+}*/
+
 
 # The comment lines below were previously in the set of SQL commands above. 
 # There is a problem with the syntax used to create the database and insert records.

@@ -22,10 +22,12 @@ resource "aws_route53_zone" "main" {
   comment = "Managed by terraform"
 }
 
-resource "aws_route53_record" "database" {
+/*resource "aws_route53_record" "database" {
   zone_id = "${aws_route53_zone.main.zone_id}"
   name    = "mydatabase.${var.DnsZoneName}"
   type    = "A"
   ttl     = "300"
   records = ["${aws_instance.database.private_ip}"]
 }
+*/
+
