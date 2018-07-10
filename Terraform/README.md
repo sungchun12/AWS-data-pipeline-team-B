@@ -16,9 +16,11 @@ The Redshift username and password are not specified directly in the .tf files t
 
 * redshift_master_username
 * redshift_master_password
+
+Once you create those variables:  
  
-`terraform plan`  
-`terraform apply`  
+Check for errors: `terraform plan`  
+Launch resources: `terraform apply`  
 
 If you need to remove the resources for a config change ...
 `terraform destory`  
