@@ -11,6 +11,12 @@
 Navigate to the terraform repository folder in a terminal, then:  
 
 `terraform init`  
+
+The Redshift username and password are not specified directly in the .tf files to keep them secure. Add a file called `terraform.tfvars` to your repository - Terraform will automatically read this file when it tries to launch resources on AWS. The file needs to contain the following variables for the configs in this repo to work correctly:
+
+* redshift_master_username
+* redshift_master_password
+ 
 `terraform plan`  
 `terraform apply`  
 
