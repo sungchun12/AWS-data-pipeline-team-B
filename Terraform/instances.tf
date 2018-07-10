@@ -1,3 +1,8 @@
+resource "aws_eip" "forAnalytics" {
+  instance = "${aws_instance.analytics.id}"
+  vpc      = true
+}
+
 resource "aws_instance" "analytics" {
   ami                         = "${lookup(var.AmiLinux, var.region)}"
   instance_type               = "t2.micro"

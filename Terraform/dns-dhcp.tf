@@ -19,14 +19,13 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
 resource "aws_route53_zone" "main" {
   name    = "${var.DnsZoneName}"
   vpc_id  = "${aws_vpc.ima-flexb-vpc.id}"
-  comment = "Managed by terraform"
+  comment = "DNS Zone for IMA - FLEX team B"
 }
 
-/*resource "aws_route53_record" "database" {
+resource "aws_route53_record" "ima-flexb-dns-test" {
+  name    = "ima-flexb-dns-test.${var.DnsZoneName}"
   zone_id = "${aws_route53_zone.main.zone_id}"
-  name    = "mydatabase.${var.DnsZoneName}"
   type    = "A"
-  ttl     = "300"
-  records = ["${aws_instance.database.private_ip}"]
-}*/
-
+  ttl     = 300
+  records = ["${aws_instance.analytics.public_ip}"]
+}
