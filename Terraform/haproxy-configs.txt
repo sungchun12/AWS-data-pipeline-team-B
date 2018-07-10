@@ -1,0 +1,17 @@
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    maxconn 4000
+    user haproxy
+    group haproxy
+    daemon
+
+stats socket /var/lib/haproxy/stats mode 777
+
+listen Redshift 0.0.0.0:5439
+    timeout connect 10s
+    timeout client 1m
+    timeout server 1m
+    mode tcp
+    server singleRedshift <redshift-endpoint>:5439

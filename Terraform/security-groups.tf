@@ -18,9 +18,18 @@ resource "aws_security_group" "ima-flexb-analytics" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # For connecting to Redshift - set up instance to forward
+  # connections here to the Redshift cluster
   ingress {
-    from_port   = "22"
-    to_port     = "22"
+    from_port   = 5439
+    to_port     = 5439
+    protocol    = "TCP"
+    cidr_blocks = ["12.106.136.114/32"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -56,15 +65,8 @@ resource "aws_security_group" "ima-flexb-database" {
   }
 
   ingress {
-    from_port   = 5439
-    to_port     = 5439
-    protocol    = "TCP"
-    cidr_blocks = ["12.106.136.114/32"]
-  }
-
-  ingress {
-    from_port   = "22"
-    to_port     = "22"
+    from_port   = 22
+    to_port     = 22
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }

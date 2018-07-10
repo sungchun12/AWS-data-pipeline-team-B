@@ -13,7 +13,7 @@ resource "aws_redshift_cluster" "ima-flexb-dw" {
   # cluster networking:
   vpc_security_group_ids    = ["${aws_security_group.ima-flexb-database.id}"]
   cluster_subnet_group_name = "${aws_redshift_subnet_group.dw-sng.name}"
-  publicly_accessible       = true
+  publicly_accessible       = false
 
   # data security:
   encrypted = true

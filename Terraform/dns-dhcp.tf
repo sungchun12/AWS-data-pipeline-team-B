@@ -28,6 +28,5 @@ resource "aws_route53_zone" "main" {
   type    = "A"
   ttl     = "300"
   records = ["${aws_instance.database.private_ip}"]
-}
-*/
+}*/
 
