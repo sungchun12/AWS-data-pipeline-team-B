@@ -19,8 +19,8 @@ The Redshift username and password are not specified directly in the .tf files t
 
 Once you create those variables:  
  
-Check for errors: `terraform plan`  
-Launch resources: `terraform apply`  
+* Check for errors: `terraform plan`  
+* Launch resources: `terraform apply`  
 
 If you need to remove the resources for a config change ...
 `terraform destory`  
