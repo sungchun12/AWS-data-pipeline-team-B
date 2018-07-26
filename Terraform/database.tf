@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_redshift_cluster" "ima-flexb-dw" {
   # basic config:
   cluster_identifier = "ima-flexb-dw"
@@ -8,7 +10,7 @@ resource "aws_redshift_cluster" "ima-flexb-dw" {
   cluster_type       = "single-node"
 
   # role configs:
-  iam_roles = ["arn:aws:iam::868413670592:role/ima-flexb-dw"]
+  iam_roles = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/ima-flexb-dw"]
 
   # cluster networking:
   vpc_security_group_ids    = ["${aws_security_group.ima-flexb-database.id}"]

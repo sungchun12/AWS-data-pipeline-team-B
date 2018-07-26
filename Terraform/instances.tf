@@ -1,9 +1,9 @@
-resource "aws_eip" "forAnalytics" {
-  instance = "${aws_instance.analytics.id}"
+resource "aws_eip" "analytics-eip" {
+  instance = "${aws_instance.analytics-bastion.id}"
   vpc      = true
 }
 
-resource "aws_instance" "analytics" {
+resource "aws_instance" "analytics-bastion" {
   ami                         = "${lookup(var.AmiLinux, var.region)}"
   instance_type               = "t2.micro"
   associate_public_ip_address = "true"
@@ -12,7 +12,7 @@ resource "aws_instance" "analytics" {
   key_name                    = "${var.key_name}"
 
   tags {
-    Name     = "analytics"
+    Name     = "analytics-bastion"
     Owner    = "${var.tags["Owner"]}"
     Email    = "${var.tags["Email"]}"
     Location = "${var.tags["Location"]}"

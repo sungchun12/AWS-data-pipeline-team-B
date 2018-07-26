@@ -1,0 +1,8 @@
+[
+    {
+      "Classification": "core-site",
+      "Properties": {
+        "fs.s3n.endpoint": "s3.amazonaws.com"
+      }
+    }
+]

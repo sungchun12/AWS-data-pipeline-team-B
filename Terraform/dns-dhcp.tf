@@ -27,5 +27,5 @@ resource "aws_route53_record" "ima-flexb-dns-test" {
   zone_id = "${aws_route53_zone.main.zone_id}"
   type    = "A"
   ttl     = 300
-  records = ["${aws_instance.analytics.public_ip}"]
+  records = ["${aws_instance.analytics-bastion.public_ip}"]
 }

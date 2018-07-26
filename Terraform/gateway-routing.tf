@@ -71,7 +71,7 @@ resource "aws_route_table" "ima-flexb-rt-pri" {
   route {
     cidr_block = "0.0.0.0/0"
 
-    # connects the private subnet to the public one:
+    # Routes incoming traffic through the bastion host:
     nat_gateway_id = "${aws_nat_gateway.public-az1-ngw.id}"
   }
 }

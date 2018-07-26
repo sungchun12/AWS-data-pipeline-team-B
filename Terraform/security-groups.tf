@@ -31,7 +31,7 @@ resource "aws_security_group" "ima-flexb-analytics" {
     from_port   = 22
     to_port     = 22
     protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["12.106.136.114/32"]
   }
 
   egress {
@@ -65,10 +65,10 @@ resource "aws_security_group" "ima-flexb-database" {
   }
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port       = 22
+    to_port         = 22
+    protocol        = "TCP"
+    security_groups = ["${aws_security_group.ima-flexb-analytics.id}"]
   }
 
   egress {
@@ -77,4 +77,99 @@ resource "aws_security_group" "ima-flexb-database" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+# EMR Master
+resource "aws_security_group" "ima-flexb-emr-master-sg" {
+  name        = "ima-flexb-emr-master-sg"
+  description = "EMR master security group"
+
+  tags {
+    Name     = "ima-flexb-emr-master-sg"
+    Owner    = "${var.tags["Owner"]}"
+    Email    = "${var.tags["Email"]}"
+    Location = "${var.tags["Location"]}"
+  }
+
+  vpc_id = "${aws_vpc.ima-flexb-vpc.id}"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
+    cidr_blocks = ["12.106.136.114/32"]
+  }
+
+  ingress {
+    from_port   = 8433
+    to_port     = 8433
+    protocol    = "TCP"
+    cidr_blocks = ["52.94.86.0/23"]
+  }
+
+  # outbound:
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# EMR Core security group:
+resource "aws_security_group" "ima-flexb-emr-worker-sg" {
+  name        = "ima-flexb-emr-worker-sg"
+  description = "emr workers"
+
+  tags {
+    Name     = "ima-flexb-emr-worker-sg"
+    Owner    = "${var.tags["Owner"]}"
+    Email    = "${var.tags["Email"]}"
+    Location = "${var.tags["Location"]}"
+  }
+
+  vpc_id = "${aws_vpc.ima-flexb-vpc.id}"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group_rule" "emr-workers-tcp" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 65535
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.ima-flexb-emr-worker-sg.id}"
+  source_security_group_id = "${aws_security_group.ima-flexb-emr-master-sg.id}"
+}
+
+resource "aws_security_group_rule" "emr-master-tcp" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 65535
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.ima-flexb-emr-master-sg.id}"
+  source_security_group_id = "${aws_security_group.ima-flexb-emr-worker-sg.id}"
+}
+
+resource "aws_security_group_rule" "emr-workers-udp" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 65535
+  protocol                 = "udp"
+  security_group_id        = "${aws_security_group.ima-flexb-emr-worker-sg.id}"
+  source_security_group_id = "${aws_security_group.ima-flexb-emr-master-sg.id}"
+}
+
+resource "aws_security_group_rule" "emr-master-udp" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 65535
+  protocol                 = "udp"
+  security_group_id        = "${aws_security_group.ima-flexb-emr-master-sg.id}"
+  source_security_group_id = "${aws_security_group.ima-flexb-emr-worker-sg.id}"
 }

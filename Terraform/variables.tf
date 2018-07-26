@@ -9,21 +9,10 @@ variable "AmiLinux" {
     us-east-1    = "ami-b73b63a0"
     us-west-2    = "ami-5ec1673e"
     ca-central-1 = "ami-03e86a67"
-    
   }
 
-  description = "maps basic AMI with Python / Java etc. installed by region"
+  description = "Windows AMI to enable PowerBI connection to Redshift"
 }
-
-#variable "aws_access_key" {
-#  default     = ""
-#  description = "the user aws access key"
-#}
-
-#variable "aws_secret_key" {
-#  default     = ""
-#  description = "the user aws secret key"
-#}
 
 variable "vpc-fullcidr" {
   default     = "10.0.0.0/16"
@@ -67,4 +56,46 @@ variable redshift_master_password {}
 
 variable redshift_logs_prefix {
   default = "log/"
+}
+
+variable data_directory {
+  default = "../data/core"
+}
+
+variable file_format {
+  default = ".csv"
+}
+
+variable "inputfiles" {
+  type = "map"
+
+  default = {
+    allstarfull         = "AllstarFull"
+    appearances         = "Appearances"
+    awardsmanagers      = "AwardsManagers"
+    awardsplayers       = "AwardsPlayers"
+    awardssharemanagers = "AwardsShareManagers"
+    awardsshareplayers  = "AwardsSharePlayers"
+    batting             = "Batting"
+    battingpost         = "BattingPost"
+    collegeplaying      = "CollegePlaying"
+    fielding            = "Fielding"
+    fieldingof          = "FieldingOF"
+    fieldingofsplit     = "FieldingOFsplit"
+    fieldingpost        = "FieldingPost"
+    halloffame          = "HallOfFame"
+    homegames           = "HomeGames"
+    managers            = "Managers"
+    managershalf        = "ManagersHalf"
+    parks               = "Parks"
+    people              = "People"
+    pitching            = "Pitching"
+    pitchingpost        = "PitchingPost"
+    salaries            = "Salaries"
+    schools             = "Schools"
+    seriespost          = "SeriesPost"
+    teams               = "Teams"
+    teamsfranchises     = "TeamsFranchises"
+    teamshalf           = "TeamsHalf"
+  }
 }
