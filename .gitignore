@@ -1,6 +1,6 @@
-.tfstate
-.tfvars
-.backup
+tfstate
+tfvars
+backup
 
-.csv
+csv
 
