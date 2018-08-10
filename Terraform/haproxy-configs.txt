@@ -10,7 +10,7 @@ global
 stats socket /var/lib/haproxy/stats mode 777
 
 listen Redshift 0.0.0.0:5439
-    timeout connect 10s
+    timeout connect 15m
     timeout client 1m
     timeout server 1m
     mode tcp

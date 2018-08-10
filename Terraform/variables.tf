@@ -6,12 +6,13 @@ variable "AmiLinux" {
   type = "map"
 
   default = {
-    us-east-1    = "ami-b73b63a0"
-    us-west-2    = "ami-5ec1673e"
+    us-east-1    = "ami-cfe4b2b0"
+    us-west-1    = "ami-0e86606d"
+    us-west-2    = "ami-0ad99772"
     ca-central-1 = "ami-03e86a67"
   }
 
-  description = "Windows AMI to enable PowerBI connection to Redshift"
+  description = "AMI to enable PowerBI connection to Redshift"
 }
 
 variable "vpc-fullcidr" {
