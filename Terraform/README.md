@@ -29,7 +29,8 @@ Additionally, you can run `terraform apply` repeatedly to make changes to resour
 
 ### Post-Terraform Setup:
 
-The AWS Infrastructure implements a VPC, within which there are public and private subnets. The Redshift cluster is deployed into the private subnet, and as such it is not directly accessible outside the VPC. On the other hand, EC2 instances are deployed into the public subnet. So, we can use the EC2 machines as proxy servers for connecting to Redshift.   
+The AWS Infrastructure implements a VPC with a public and private subnet. The Redshift cluster is deployed into the private subnet, and as such it is not directly accessible outside the VPC. An EC2 instance is deployed into the public subnet and configured as a bastion host to access the database.
+   
 The steps below describe the necessary setup:
 
 1) Navigate to the EC2 section of the AWS console  

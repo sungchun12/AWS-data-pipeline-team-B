@@ -23,6 +23,7 @@ resource "aws_instance" "analytics-bastion" {
   #!/bin/bash
   yum update -y
   yum install postgresql -y && yum install haproxy -y
+  service haproxy start
 
 HEREDOC
 }

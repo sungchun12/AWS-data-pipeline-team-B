@@ -223,6 +223,11 @@ resource "aws_s3_bucket_object" "teamshalf" {
 resource "aws_s3_bucket" "ima-flexb-agg" {
   bucket = "ima-flexb-agg"
   region = "${var.region}"
+  acl    = "public-read"
+
+  versioning {
+    enabled = true
+  }
 
   tags = {
     Name     = "ima-flexb-agg"
@@ -232,60 +237,4 @@ resource "aws_s3_bucket" "ima-flexb-agg" {
   }
 }
 
-data "aws_redshift_service_account" "main" {}
 
-# for redshift logs
-resource "aws_s3_bucket" "ima-flexb-dw-logs" {
-  bucket = "ima-flexb-dw-logs"
-  region = "${var.region}"
-
-  #acl    = "log-delivery-write"
-  lifecycle_rule {
-    id      = "log"
-    enabled = true
-
-    prefix = "log/"
-
-    tags {
-      "rule"      = "log"
-      "autoclean" = "true"
-    }
-
-    expiration {
-      days = 90
-    }
-  }
-
-  tags = {
-    Name     = "ima-flexb-dw-logs"
-    Owner    = "${var.tags["Owner"]}"
-    Email    = "${var.tags["Email"]}"
-    Location = "${var.tags["Location"]}"
-  }
-
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-                    "Sid": "Put bucket policy needed for audit logging",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "AWS": "${data.aws_redshift_service_account.main.arn}"
-                    },
-                    "Action": "s3:PutObject",
-                    "Resource": "arn:aws:s3:::ima-flexb-dw-logs/*"
-                },
-                {
-                    "Sid": "Get bucket policy needed for audit logging ",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "AWS": "${data.aws_redshift_service_account.main.arn}"
-                    },
-                    "Action": "s3:GetBucketAcl",
-                    "Resource": "arn:aws:s3:::ima-flexb-dw-logs"
-                }
-    ]
-}
-EOF
-}

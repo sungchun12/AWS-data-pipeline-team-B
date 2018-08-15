@@ -1,15 +1,18 @@
 variable "region" {
-  default = "ca-central-1"
+  default = "us-west-2"
 }
 
 variable "AmiLinux" {
   type = "map"
 
   default = {
-    us-east-1    = "ami-cfe4b2b0"
-    us-west-1    = "ami-0e86606d"
-    us-west-2    = "ami-0ad99772"
-    ca-central-1 = "ami-03e86a67"
+    #us-east-1    = "ami-cfe4b2b0" # base ami
+    #us-west-1    = "ami-0e86606d" # basse ami
+    #us-west-1 = "ami-012e4bf43f2f2c004"
+    #us-west-2    = "ami-0ad99772" # base ami
+    us-west-2 = "ami-2465465c"
+    #ca-central-1 = "ami-03e86a67" # base ami
+    ca-central-1 = "ami-112ba675" # ami with proxy configs
   }
 
   description = "AMI to enable PowerBI connection to Redshift"
@@ -31,7 +34,7 @@ variable "subnet-private-az1-cidr" {
 }
 
 variable "key_name" {
-  default     = "mw-vpc-test"
+  default     = "ima-flexb-admin-key"
   description = "the ssh key to use in the EC2 machines"
 }
 

@@ -4,7 +4,7 @@ resource "aws_iam_instance_profile" "ima-flexb-instance-profile" {
   role = "${data.aws_iam_role.ima-flexb-emr-role.name}"
 }
 
-# Look up IAM role that we manually created in the DB
+# Look up IAM role for Flexb-emr
 data aws_iam_role "ima-flexb-emr-role" {
   name = "ima-flexb-emr-role"
 }
@@ -60,8 +60,6 @@ EOF
   #  args = ["instance.isMaster=true", "echo running on master node"]
   #}
 
-
-  #configurations = "test-fixtures/emr_configurations.json"
-
   service_role = "${data.aws_iam_role.ima-flexb-emr-service-role.arn}"
 }
+
