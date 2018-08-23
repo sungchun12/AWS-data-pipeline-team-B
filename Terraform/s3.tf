@@ -237,4 +237,28 @@ resource "aws_s3_bucket" "ima-flexb-agg" {
   }
 }
 
+#place to store spark jobs:
+resource "aws_s3_bucket" "ima-flexb-pyspark" {
+  bucket = "ima-flexb-pyspark"
+  region = "${var.region}"
+  acl    = "public-read"
 
+  versioning {
+    enabled = true
+  }
+
+  tags = {
+    Name     = "ima-flexb-pyspark"
+    Owner    = "${var.tags["Owner"]}"
+    Email    = "${var.tags["Email"]}"
+    Location = "${var.tags["Location"]}"
+  }
+}
+
+# Code for spark jobs in bucket:
+resource "aws_s3_bucket_object" "pyspark-code" {
+  bucket = "${aws_s3_bucket.ima-flexb-pyspark.id}"
+  acl    = "public-read"
+  key    = "scripts/${var.sparkfiles["teams_home_games"]}.py"
+  source = "${var.spark_directory}/${var.sparkfiles["teams_home_games"]}.py"
+}

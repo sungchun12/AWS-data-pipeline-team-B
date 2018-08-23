@@ -66,6 +66,10 @@ variable data_directory {
   default = "../data/core"
 }
 
+variable spark_directory {
+  default = "../Spark"
+}
+
 variable file_format {
   default = ".csv"
 }
@@ -101,5 +105,12 @@ variable "inputfiles" {
     teams               = "Teams"
     teamsfranchises     = "TeamsFranchises"
     teamshalf           = "TeamsHalf"
+  }
+}
+
+variable "sparkfiles" {
+  type = "map"
+  default = {
+    teams_home_games = "teams_home_games"
   }
 }
