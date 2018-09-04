@@ -1,4 +1,4 @@
-# test teams_dim.py
+# teams_dim.py
 /usr/bin/spark-submit \
   --master local[4] \
   teams_dim.py \
@@ -7,7 +7,7 @@
   s3://ima-flexb-agg/data/Teams/Teams_dim \
   s3://ima-flexb-agg/error/Teams/Teams_dim
 
-# test teams_fact.py
+# teams_fact.py
 /usr/bin/spark-submit \
   --master local[4] \
   teams_fact.py \
@@ -15,3 +15,34 @@
   s3://ima-flexb-sor/data/HomeGames/HomeGames.csv \
   s3://ima-flexb-agg/data/Teams/Teams_fact \
   s3://ima-flexb-agg/error/Teams/Teams_fact
+
+# college_playing_dim.py
+/usr/bin/spark-submit \
+  --master local[4] \
+  college_playing_dim.py \
+  --college-playing-data-path s3://ima-flexb-sor/data/CollegePlaying/ \
+  --output-path s3://ima-flexb-agg/data/CollegePlaying_dim/ \
+  --error-path s3://ima-flexb-agg/error/CollegePlaying_dim/
+
+# players_dim.py
+/usr/bin/spark-submit \
+  --master local[4] \
+  players_dim.py \
+  --fielding-post-data-path s3://ima-flexb-sor/data/FieldingPost/ \
+  --batting-post-data-path s3://ima-flexb-sor/data/BattingPost/ \
+  --pitching-post-data-path s3://ima-flexb-sor/data/PitchingPost/ \
+  --output-path s3://ima-flexb-agg/data/Players_dim/ \
+  --error-path s3://ima-flexb-agg/error/Players_dim/
+
+# players_fact.py
+/usr/bin/spark-submit \
+  --master local[4] \
+  players_fact.py \
+  --players-data-path s3://ima-flexb-agg/data/Players_dim/ \
+  --fielding-post-data-path s3://ima-flexb-sor/data/FieldingPost/ \
+  --batting-post-data-path s3://ima-flexb-sor/data/BattingPost/ \
+  --pitching-post-data-path s3://ima-flexb-sor/data/PitchingPost/ \
+  --salaries-data-path s3://ima-flexb-sor/data/Salaries/ \
+  --output-path s3://ima-flexb-agg/data/Players_fact/ \
+  --error-path s3://ima-flexb-agg/error/Players_fact/
+
