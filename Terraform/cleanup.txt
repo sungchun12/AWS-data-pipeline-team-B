@@ -1,0 +1,17 @@
+
+# remove roles from EMR instance profile:
+aws iam remove-role-from-instance-profile \
+  --instance-profile-name ima-flexb-instance-profile \
+  --role-name ima-flexb-emr-role
+
+aws iam remove-role-from-instance-profile\
+  --instance-profile-name ima-flexb-instance-profile \
+  --role-name ima-flexb-emr-service-role
+
+# delete EMR instance profile
+aws iam delete-instance-profile \
+  --instance-profile-name ima-flexb-instance-profile
+
+# Delete security groups
+
+# Delete S3 buckets

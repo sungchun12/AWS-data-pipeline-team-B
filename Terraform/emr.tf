@@ -1,12 +1,8 @@
 # IAM instance profile to give EMR instances access to S3
-resource "aws_iam_instance_profile" "ima-flexb-instance-profile-2" {
- name = "ima-flexb-instance-profile-2"
+resource "aws_iam_instance_profile" "ima-flexb-instance-profile" {
+ name = "ima-flexb-instance-profile"
  role = "${data.aws_iam_role.ima-flexb-emr-role.name}"
 }
-
-# data "aws_iam_instance_profile" "ima-flexb-instance-profile" {
-#   name = "ima-flexb-instance-profile"
-# }
 
 # Look up IAM role for Flexb-emr
 data aws_iam_role "ima-flexb-emr-role" {
@@ -40,7 +36,7 @@ EOF
     subnet_id                         = "${aws_subnet.public-az1-sn.id}"
     emr_managed_master_security_group = "${aws_security_group.ima-flexb-emr-master-sg.id}"
     emr_managed_slave_security_group  = "${aws_security_group.ima-flexb-emr-worker-sg.id}"
-    instance_profile                  = "${aws_iam_instance_profile.ima-flexb-instance-profile-2.arn}"
+    instance_profile                  = "${aws_iam_instance_profile.ima-flexb-instance-profile.arn}"
 
     key_name = "${var.key_name}"
   }

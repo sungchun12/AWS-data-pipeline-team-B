@@ -255,10 +255,3 @@ resource "aws_s3_bucket" "ima-flexb-pyspark" {
   }
 }
 
-# Code for spark jobs in bucket:
-resource "aws_s3_bucket_object" "pyspark-code" {
-  bucket = "${aws_s3_bucket.ima-flexb-pyspark.id}"
-  acl    = "public-read"
-  key    = "scripts/${var.sparkfiles["teams_home_games"]}.py"
-  source = "${var.spark_directory}/${var.sparkfiles["teams_home_games"]}.py"
-}
