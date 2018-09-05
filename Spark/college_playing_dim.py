@@ -5,7 +5,6 @@ from pyspark.sql import SparkSession #import spark functionality for spark sql
 from pyspark.sql.types import DoubleType, IntegerType, StringType, BooleanType, ArrayType #import data types
 from pyspark.sql import DataFrame #used for sql functionality on dataframes
 from pyspark.sql.functions import monotonically_increasing_id, col, row_number, max #used to create incremental ids
-import pyspark.sql.functions as F #import all functions
 from pyspark.sql.window import Window
 logger = logging.getLogger(__name__) #import script logging information
 
@@ -28,9 +27,9 @@ args = parser.parse_args()
 
 if args.college_playing_data_path:
     college_playing_data_path = args.college_playing_data_path
-if args.college_playing_output_path:
+if args.output_path:
     output_path = args.output_path
-if args.college_playing_error_path:
+if args.error_path:
     error_path = args.error_path
 
 # start Spark session:

@@ -104,7 +104,7 @@ nulls_check = ['teamID', 'yearID', 'team_key']
 for nc in nulls_check:
 	null_issue = teams_fact.where(teams_fact[nc].isNull())
 	if null_issue.count() > 0:
-		null_issue.write.csv(error_path, header=True)
+		null_issue.write.csv(error_path, mode = 'overwrite', header=True)
 	teams_fact = teams_fact.where(teams_fact[nc].isNull() == False)
 
 # write teams_fact to csv:
