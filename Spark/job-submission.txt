@@ -2,19 +2,20 @@
 /usr/bin/spark-submit \
   --master local[4] \
   teams_dim.py \
-  s3://ima-flexb-sor/data/Teams/Teams.csv \
-  s3://ima-flexb-sor/data/HomeGames/HomeGames.csv \
-  s3://ima-flexb-agg/data/Teams/Teams_dim \
-  s3://ima-flexb-agg/error/Teams/Teams_dim
+  --teams-data-path s3://ima-flexb-sor/data/Teams/ \
+  --home-games-data-path s3://ima-flexb-sor/data/HomeGames/ \
+  --output-path s3://ima-flexb-agg/data/Teams_dim/ \
+  --error-path s3://ima-flexb-agg/error/Teams_dim/
 
 # teams_fact.py
 /usr/bin/spark-submit \
   --master local[4] \
   teams_fact.py \
-  s3://ima-flexb-sor/data/Teams/Teams.csv \
-  s3://ima-flexb-sor/data/HomeGames/HomeGames.csv \
-  s3://ima-flexb-agg/data/Teams/Teams_fact \
-  s3://ima-flexb-agg/error/Teams/Teams_fact
+  --teams-dim-path s3://ima-flexb-agg/data/Teams_dim/ \
+  --teams-data-path s3://ima-flexb-sor/data/Teams/ \
+  --home-games-data-path s3://ima-flexb-sor/data/HomeGames/ \
+  --output-path s3://ima-flexb-agg/data/Teams_fact/ \
+  --error-path s3://ima-flexb-agg/error/Teams_fact/
 
 # college_playing_dim.py
 /usr/bin/spark-submit \

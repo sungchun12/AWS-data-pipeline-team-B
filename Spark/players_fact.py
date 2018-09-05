@@ -1,6 +1,5 @@
 
 import argparse
-import sys #The list of command line arguments passed to a Python script.
 import logging
 from pyspark.sql import SparkSession #import spark functionality for spark sql
 from pyspark.sql.types import DoubleType, IntegerType, StringType, BooleanType, ArrayType #import data types
@@ -100,7 +99,7 @@ def assign_metrics(df, group_keys, metrics):
 
 # apply function above to each data frame for analysis:
 fielding = assign_metrics(fielding, group_keys, metrics)
-batting = assign_metrics(batting, group_keys, metrics)
+batting  = assign_metrics(batting, group_keys, metrics)
 pitching = assign_metrics(pitching, group_keys, metrics)
 salaries = assign_metrics(salaries, group_keys, metrics)
 
@@ -140,6 +139,13 @@ players_fact_null=players_fact.where(players_fact['player_key'].isNull())
 
 # get only the records with a valid player_key:
 players_fact=players_fact.where(players_fact['player_key'].isNotNull())
+
+players = players.withColumn("player_fact_key", \
+                             monotonically_increasing_id())
+windowSpec = Window.orderBy("player_fact_key")
+players.withColumn("player_fact_key", \
+                   row_number().over(windowSpec))\
+                   .sort(col("player_fact_key").desc())
 
 # upload results to s3:
 try:

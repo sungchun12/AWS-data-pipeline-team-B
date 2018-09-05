@@ -1,6 +1,5 @@
 
 import argparse
-import sys
 import logging
 from pyspark.sql import SparkSession #import spark functionality for spark sql
 from pyspark.sql.types import DoubleType, IntegerType, StringType, BooleanType, ArrayType #import data types

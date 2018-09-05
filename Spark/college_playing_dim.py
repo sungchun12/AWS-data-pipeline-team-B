@@ -1,6 +1,5 @@
 
 import argparse
-import sys
 import logging
 from pyspark.sql import SparkSession #import spark functionality for spark sql
 from pyspark.sql.types import DoubleType, IntegerType, StringType, BooleanType, ArrayType #import data types
@@ -10,10 +9,10 @@ import pyspark.sql.functions as F #import all functions
 from pyspark.sql.window import Window
 logger = logging.getLogger(__name__) #import script logging information
 
+# for debugging:
 #college_playing_data_path = 's3://ima-flexb-sor/data/CollegePlaying/' 
 #output_path = 's3://ima-flexb-agg/data/CollegePlaying_dim/'
 #error_path = 's3://ima-flexb-agg/error/CollegePlaying_dim/'
-
 
 # Parse runtime variables:
 parser = argparse.ArgumentParser()
